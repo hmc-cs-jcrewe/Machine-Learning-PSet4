@@ -136,6 +136,13 @@ class Perceptron :
         ### ========== TODO : START ========== ###
         # part a: implement perceptron algorithm
         # cycle until all examples are correctly classified
+        while self.fitHelper(X,y) == False:
+            for i in range(n):
+                if np.dot(y[i] * self.coef_, X[i]) <= 0:
+                    self.mistakes_[i] += 1
+                    self.coef_ = self.coef_ + y[i]*X[i]
+                if verbose:
+                    print(self.coef_)
         # do NOT shuffle examples on each iteration
         # on a mistake, be sure to update self.mistakes_
         #               and if verbose, output the updated self.coef_
@@ -144,6 +151,29 @@ class Perceptron :
         
         return self
     
+    def fitHelper(self, X, y):
+        """
+        Determine if there aren't any mistakes in the classification of the training data 
+        
+        Parameters
+        --------------------
+            X         -- numpy array of shape (n,d), features
+            y         -- numpy array of shape (n,), targets
+            
+        
+        Returns
+        --------------------
+            bool      -- true if there are no mistakes in the training data classification, false otherwise
+        """
+
+         # get dimensions of data
+        n,d = X.shape
+
+        for i in range(n):
+            if np.dot(y[i]*self.coef_,X[i]) <= 0:
+                return False
+        return True
+
     def predict(self, X) :
         """
         Predict labels using perceptron.
@@ -189,7 +219,15 @@ def main() :
             print '\tcoef = %s, mistakes = %d' % (str(clf.coef_), sum(clf.mistakes_))
     
     ### ========== TODO : START ========== ###
-    # part b: see handout
+    train_data = load_data("perceptron_data.csv")
+    clf2 = Perceptron()
+    clf2.fit(train_data.X, train_data.y)
+    print '0 initial: ', '\tcoef = %s, mistakes = %d' % (str(clf2.coef_), sum(clf2.mistakes_))
+
+    clf3 = Perceptron()
+    clf3.fit(train_data.X, train_data.y, np.array([1,0]))
+    print 'non-0 initial: ', '\tcoef = %s, mistakes = %d' % (str(clf3.coef_), sum(clf3.mistakes_))
+
     
     ### ========== TODO : END ========== ###
     
@@ -210,9 +248,19 @@ def main() :
     # part c: see handout
     
     # compute R^2
-    
+    n,d = np.shape(train_data.X)
+    R = 0
+    for i in range(0, n):
+        option = 0
+        for j in range(d):
+            option += train_data.X[i][j]**2
+        option = option ** 0.5
+        if option > R:
+            R = option
+
     # compute perceptron bound (R / gamma)^2
-    
+    bound = (float(R) / float(gamma))**0.5
+    print 'bound: ', bound 
     ### ========== TODO : EEND ========== ###
 
 if __name__ == "__main__" :
