@@ -1,7 +1,7 @@
 """
-Author      : Yi-Chieh Wu
+Author      : Jackson Crewe & Matt Guillory 
 Class       : HMC CS 158
-Date        : 2017 Jan 13
+Date        : 2017 Feb 14
 Description : Perceptron
 """
 

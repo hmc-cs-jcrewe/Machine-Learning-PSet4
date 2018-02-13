@@ -1,7 +1,7 @@
 """
-Author      : Yi-Chieh Wu
+Author      : Jackson Crewe & Matt Guillory 
 Class       : HMC CS 158
-Date        : 2018 Feb 5
+Date        : 2018 Feb 14
 Description : Perceptron vs Logistic Regression on a Phoneme Dataset
 """
 
